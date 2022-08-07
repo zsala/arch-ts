@@ -1,0 +1,16 @@
+import ClassFunction from "./class.function";
+import ClassConstructor from "./class.constructor";
+
+export enum ClassType {
+  CLASS = 'class',
+  INTERFACE = 'interface'
+}
+
+export default interface ClassInfo {
+  name: string;
+  extends?: string;
+  implements?: string[];
+  type: ClassType;
+  constructorInfo?: ClassConstructor;
+  functions?: ClassFunction[];
+}
