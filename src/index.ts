@@ -10,5 +10,3 @@ let classInfoMap = {};
 
 classInfoMap = archAnalyzer.analyze();
 graphRenderer.render(classInfoMap);
-
-console.log(classInfoMap);

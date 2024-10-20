@@ -63,9 +63,21 @@ export default class GraphRenderer {
       const isClass = classInfo.type === ClassType.CLASS;
 
       // Corrected label for interfaces with line break for interface name and class name
-      let classLabel = isClass 
-      ? `{${className}|` 
-      : `{\\<\\<interface\\>\\>\\n${className}|`;  // Adding \n for line break
+      let classLabel = isClass
+        ? `{${className}|`
+        : `{\\<\\<interface\\>\\>\\n${className}|`; // Adding \n for line break
+
+      // Add properties if available
+      if (classInfo.properties && classInfo.properties.length > 0) {
+        classInfo.properties.forEach((property) => {
+          classLabel += `- ${property.name}: ${property.type}\\l`;
+        });
+      }
+
+      // Add a separator if there are properties and methods/constructor
+      if (classInfo.properties.length > 0) {
+        classLabel += "|"; // Add separator line
+      }
 
       // Add constructor if available
       if (classInfo.constructorInfo) {
@@ -74,10 +86,17 @@ export default class GraphRenderer {
         classLabel += `+ constructor(${constructorParams})\\l`;
       }
 
+      // Add a separator if there's a constructor and methods
+      if (classInfo.constructorInfo && classInfo.functions && classInfo.functions.length > 0) {
+        classLabel += "|"; // Add separator line
+      }
+
       // Add class methods
       if (classInfo.functions) {
         classInfo.functions.forEach((func) => {
-          const methodParams = func.parameters.join(", ");
+          const methodParams = func.parameters
+            .map((param) => `${param.name}: ${param.type}`)
+            .join(", ");
           classLabel += `+ ${func.name}(${methodParams}): ${func.returnType}\\l`;
         });
       }

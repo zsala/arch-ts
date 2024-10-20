@@ -11,6 +11,7 @@ export default interface ClassInfo {
   extends?: string;
   implements?: string[];
   type: ClassType;
+  properties: { name: string; type: string }[];
   constructorInfo?: ClassConstructor;
   functions?: ClassFunction[];
 }
